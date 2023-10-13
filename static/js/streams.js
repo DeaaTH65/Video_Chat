@@ -26,7 +26,7 @@ let joinAndDisplayLocalStream = async () => {
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
 
     let player = `<div class="video-container" id="user-container-${UID}">
-                    <div class="username-wrapper"><span class="user-name">My Name<span></div>
+                    <div class="username-wrapper"><span class="user-name">Name<span></div>
                     <div class="video-player" id="user-${UID}"></div>
                 </div>`
     document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
@@ -40,8 +40,8 @@ let handleUserJoined = async (user, mediaType) => {
     remoteUsers[user.uid] = user
     await client.subscribe(user, mediaType)
 
-    if(mediaType === video) {
-        let player = document.getElementById(`user.uid`)
+    if(mediaType === 'video'){
+        let player = document.getElementById(`user-container-${user.uid}`)
         if(player != null){
             player.remove()
         }
@@ -97,5 +97,5 @@ let toggleMic = async (e) => {
 
 joinAndDisplayLocalStream()
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
-document.getElementById('vid-btn').addEventListener('click', toggleCamera)
+document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
