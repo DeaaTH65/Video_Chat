@@ -66,8 +66,24 @@ body{
     color: #fff;
 }
 
+@media screen and (max-width:450px) {
+    #form-container{
+        width: 95%;
+    }
+
+    #welcome-message h1{
+        font-size: 24px;
+    }
+}
+
 
 /* -- ROOM STYLING -- */
+
+#room-name-wrapper{
+    text-align: center;
+    font-size: 18px;
+}
+
 
 #video-streams{
     display: flex;
@@ -91,6 +107,29 @@ body{
 .video-player{
     height: 100%;
     width: 100%;
+}
+
+.video-player > *{
+    border-radius: 5px;
+}
+
+.username-wrapper{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+}
+
+@media screen and (max-width:1650px) {
+    .video-container{
+        flex-basis: 300px;
+        min-height: 200px;
+    }
 }
 
 /* -- Controls -- */
