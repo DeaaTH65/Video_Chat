@@ -43,6 +43,29 @@ body{
     font-size: 16px;
 }
 
+.form-field{
+    margin: 20px;
+}
+
+.form-field label{
+    font-size: 16px;
+    line-height: 1.7em;
+}
+
+.form-field input{
+    width: 100%;
+    border: 2px solid rgba(198, 202, 219, 1);
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-field input[type = 'submit']{
+    background-color: rgba(75, 93, 172, 1);
+    border: none;
+    color: #fff;
+}
+
 
 /* -- ROOM STYLING -- */
 
