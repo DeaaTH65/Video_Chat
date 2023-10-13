@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Roboto:wght@300;500&display=swap');
+
 :root{
     --shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
 }
 
 body{
-    background-color: rgba(232, 233, 239, 1)
+    background-color: rgba(232, 233, 239, 1);
+    font-family: 'Roboto', sans-serif;
 }
+
+
+/* -- LOBBY STYLING --*/
 
 #logo{
     display: block;
@@ -23,6 +29,20 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#welcome-message{
+    text-align: center;
+    margin: 20px;
+}
+
+#welcome-message h1{
+    font-size: 36px;
+}
+
+#welcome-messaeg p{
+    font-size: 16px;
+}
+
 
 /* -- ROOM STYLING -- */
 
