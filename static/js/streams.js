@@ -97,7 +97,10 @@ let toggleMic = async (e) => {
     }
 }
 
+
+
 joinAndDisplayLocalStream()
+
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
