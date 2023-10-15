@@ -44,21 +44,24 @@ let handleUserJoined = async (user, mediaType) => {
     remoteUsers[user.uid] = user
     await client.subscribe(user, mediaType)
 
-    if(mediaType === 'video'){
+    if (mediaType === 'video'){
         let player = document.getElementById(`user-container-${user.uid}`)
-        if(player != null){
+        if (player != null){
             player.remove()
         }
 
-        player = `<div class="video-container" id="user-container-${user.uid}">
-                        <div class="username-wrapper"><span class="user-name">My Name<span></div>
-                        <div class="video-player" id="user-${user.uid}"></div>
-                    </div>`
+        let member = await getMember(user)
+
+        player = `<div  class="video-container" id="user-container-${user.uid}">
+            <div class="video-player" id="user-${user.uid}"></div>
+            <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
+        </div>`
+
         document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
         user.videoTrack.play(`user-${user.uid}`)
     }
 
-    if(mediaType === audio) {
+    if (mediaType === 'audio'){
         user.audioTrack.play()
     }
 }
@@ -108,6 +111,12 @@ let createMember = async () => {
         },
         body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID':UID})
     })
+    let member = await response.json()
+    return member
+}
+
+let getMember = async (user) => {
+    let response = await fetch(`/get_member/?UID=${user.uid}&room_name=${CHANNEL}`)
     let member = await response.json()
     return member
 }

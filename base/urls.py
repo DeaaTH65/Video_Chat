@@ -7,4 +7,5 @@ urlpatterns = [
     path('room/', views.room, name='room'),
     path('get_token/', views.getToken),
     path('create_member/', views.createMember),
+    path('get_member/', views.getMember)
 ]
