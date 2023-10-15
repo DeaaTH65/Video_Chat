@@ -1,5 +1,5 @@
 const APP_ID = '3d45f1402ea04215b6fae5ac1983deab'
-const CHANNEL = sessionStorage.getItem('room')     //change token everyday
+const CHANNEL = sessionStorage.getItem('room')
 const TOKEN = sessionStorage.getItem('token')
 let UID = Number(sessionStorage.getItem('UID'))
 
@@ -27,8 +27,10 @@ let joinAndDisplayLocalStream = async () => {
 
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
 
+    let member = await createMember()
+
     let player = `<div class="video-container" id="user-container-${UID}">
-                    <div class="username-wrapper"><span class="user-name">Name<span></div>
+                    <div class="username-wrapper"><span class="user-name">${member.name}<span></div>
                     <div class="video-player" id="user-${UID}"></div>
                 </div>`
     document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
@@ -98,6 +100,17 @@ let toggleMic = async (e) => {
 }
 
 
+let createMember = async () => {
+    let response = await fetch('/create_member/', {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID':UID})
+    })
+    let member = await response.json()
+    return member
+}
 
 joinAndDisplayLocalStream()
 
