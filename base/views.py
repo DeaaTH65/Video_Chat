@@ -1,33 +1,36 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from agora_token_builder import RtcTokenBuilder
 import random
 import time
+from agora_token_builder import RtcTokenBuilder
+from .models import RoomMember
 import json
-from . models import RoomMember
 from django.views.decorators.csrf import csrf_exempt
 
 
-# Create your views here.
-def getToken(request):
-    appId = '3d45f1402ea04215b6fae5ac1983deab'
-    appCertificate = '82853fbf429f43b89a07b44ac4b3e95d'
-    channelName = request.GET.get('channel')
-    uid = random.randint(1,230)
-    expirationTimeInSeconds = 3600 * 24
-    currentTimeStamp = time.time()
-    privilegeExpiredTs = currentTimeStamp + expirationTimeInSeconds
-    role = 1
-    
-    token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
-    return JsonResponse({'token':token, 'uid':uid}, safe=False)
 
+# Create your views here.
 
 def lobby(request):
     return render(request, 'base/lobby.html')
 
 def room(request):
     return render(request, 'base/room.html')
+
+
+def getToken(request):
+    appId = "YOUR APP ID"
+    appCertificate = "YOUR APP CERTIFICATE"
+    channelName = request.GET.get('channel')
+    uid = random.randint(1, 230)
+    expirationTimeInSeconds = 3600
+    currentTimeStamp = int(time.time())
+    privilegeExpiredTs = currentTimeStamp + expirationTimeInSeconds
+    role = 1
+
+    token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
+
+    return JsonResponse({'token': token, 'uid': uid}, safe=False)
 
 
 @csrf_exempt
@@ -52,3 +55,4 @@ def getMember(request):
     )
     name = member.name
     return JsonResponse({'name':member.name}, safe=False)
+

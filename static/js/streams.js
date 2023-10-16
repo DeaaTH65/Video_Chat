@@ -17,26 +17,23 @@ let joinAndDisplayLocalStream = async () => {
     client.on('user-left', handleUserLeft)
 
     try{
-        await client.join(APP_ID, CHANNEL, TOKEN, UID)
+        UID = await client.join(APP_ID, CHANNEL, TOKEN, UID)
     }catch(error){
         console.error(error)
         window.open('/', '_self')
     }
-
     
-
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
 
     let member = await createMember()
 
-    let player = `<div class="video-container" id="user-container-${UID}">
-                    <div class="username-wrapper"><span class="user-name">${member.name}<span></div>
-                    <div class="video-player" id="user-${UID}"></div>
-                </div>`
+    let player = `<div  class="video-container" id="user-container-${UID}">
+                     <div class="video-player" id="user-${UID}"></div>
+                     <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
+                  </div>`
+    
     document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
-
     localTracks[1].play(`user-${UID}`)
-
     await client.publish([localTracks[0], localTracks[1]])
 }
 
@@ -72,17 +69,17 @@ let handleUserLeft = async (user) => {
 }
 
 let leaveAndRemoveLocalStream = async () => {
-    for (let i=0; localTracks.length>i; i++){
+    for (let i=0; localTracks.length > i; i++){
         localTracks[i].stop()
         localTracks[i].close()
     }
 
     await client.leave()
     window.open('/', '_self')
-
 }
 
 let toggleCamera = async (e) => {
+    console.log('TOGGLE CAMERA TRIGGERED')
     if(localTracks[1].muted){
         await localTracks[1].setMuted(false)
         e.target.style.backgroundColor = '#fff'
@@ -93,6 +90,7 @@ let toggleCamera = async (e) => {
 }
 
 let toggleMic = async (e) => {
+    console.log('TOGGLE MIC TRIGGERED')
     if(localTracks[0].muted){
         await localTracks[0].setMuted(false)
         e.target.style.backgroundColor = '#fff'
@@ -101,7 +99,6 @@ let toggleMic = async (e) => {
         e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
     }
 }
-
 
 let createMember = async () => {
     let response = await fetch('/create_member/', {
@@ -115,11 +112,13 @@ let createMember = async () => {
     return member
 }
 
+
 let getMember = async (user) => {
     let response = await fetch(`/get_member/?UID=${user.uid}&room_name=${CHANNEL}`)
     let member = await response.json()
     return member
 }
+
 
 joinAndDisplayLocalStream()
 
